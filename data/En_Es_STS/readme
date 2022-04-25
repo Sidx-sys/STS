@@ -1,0 +1,27 @@
+-------------
+
+WMT13 shared translation task (English-Spanish)
+
+-------------
+
+A selection of source and MT data from the English-Spanish test data. The MT system used to produce the translation is a Moses phrase-based SMT. 
+
+
+http://www.statmt.org/wmt13/translation-task.html
+
+
+Used for: STS 2017 English-Spanish cross-lingual track
+
+
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+http://creativecommons.org/licenses/by/4.0/
+
+
+Citation:
+
+
+Ondřej Bojar, Christian Buck, Chris Callison-Burch, Christian Federmann, Barry Haddow, Philipp Koehn, Christof Monz, Matt Post, Radu Soricut and Lucia Specia. 2013. Findings of the 2013 Workshop on Statistical Machine Translation. In Proceedings of WMT 2013.
+
+
+http://www.statmt.org/wmt13/pdf/WMT01.pdf
