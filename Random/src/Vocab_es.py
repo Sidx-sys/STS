@@ -41,14 +41,14 @@ class Vocab_es:
         for sen in sentences:
             sen = sen.lower()
             sen = re.sub(r'\s+', ' ', sen)
-            sen = re.sub(r'[^a-z ]', '', sen)
+            sen = re.sub(r'[^a-zá-ú]', '', sen)
 
             # Optionally remove stop words and stem
             if self.remove_stopwords:
                 cleaned_sen = []
                 for tok in sen.split():
-                    if tok not in Vocab.stop_words:
-                        cleaned_sen.append(Vocab.stemmer.stem(tok))
+                    if tok not in Vocab_es.stop_words:
+                        cleaned_sen.append(Vocab_es.stemmer.stem(tok))
 
                 tokenized_list.append(cleaned_sen)
             else:
