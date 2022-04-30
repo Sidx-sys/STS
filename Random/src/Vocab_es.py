@@ -41,7 +41,7 @@ class Vocab_es:
         for sen in sentences:
             sen = sen.lower()
             sen = re.sub(r'\s+', ' ', sen)
-            sen = re.sub(r'[^a-zá-ú]', '', sen)
+            sen = re.sub(r'[^a-z]', '', sen)
 
             # Optionally remove stop words and stem
             if self.remove_stopwords:
