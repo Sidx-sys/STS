@@ -6,19 +6,24 @@ from typing import List, Union
 from nltk.stem import SnowballStemmer
 from nltk.corpus import stopwords
 
+import unicodedata
+
 
 class Vocab:
 
-    stemmer = SnowballStemmer(language='english')
-    stop_words = set(stopwords.words('english'))
+    def __init__(self, sentences: List[str], oov_threshold: int = 2, lang='english', remove_stopwords=False, remove_accents=False) -> None:
 
-    def __init__(self, sentences: List[str], oov_threshold: int = 2, remove_stopwords=False) -> None:
+        assert lang in ['english', 'spanish']
+        self.lang = lang
+        self.stemmer = SnowballStemmer(language=self.lang)
+        self.stop_words = set(stopwords.words(self.lang))
 
         self.oov_token = '<OOV>'
         self.bos_token = '<BOS>'
         self.eos_token = '<EOS>'
         self.pad_token = '<PAD>'
         self.remove_stopwords = remove_stopwords
+        self.remove_accents = remove_accents
 
         self.oov_threshold = oov_threshold
 
@@ -41,14 +46,22 @@ class Vocab:
         for sen in sentences:
             sen = sen.lower()
             sen = re.sub(r'\s+', ' ', sen)
-            sen = re.sub(r'[^a-z ]', '', sen)
+            if self.lang == 'english':
+                sen = re.sub(r'[^a-z ]', '', sen)
+            else:
+                sen = re.sub(r'[^A-Za-zÀ-ÖØ-öø-ÿ ]', '', sen)
+            # Optionally remove accents
+            if self.remove_accents:
+                nfkd_form = unicodedata.normalize('NFKD', sen)
+                only_ascii = nfkd_form.encode('ASCII', 'ignore')
+                only_ascii.decode('utf-8')
 
             # Optionally remove stop words and stem
             if self.remove_stopwords:
                 cleaned_sen = []
                 for tok in sen.split():
-                    if tok not in Vocab.stop_words:
-                        cleaned_sen.append(Vocab.stemmer.stem(tok))
+                    if tok not in self.stop_words:
+                        cleaned_sen.append(self.stemmer.stem(tok))
 
                 tokenized_list.append(cleaned_sen)
             else:
